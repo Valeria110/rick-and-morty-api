@@ -4,10 +4,14 @@ import { useDeboubce } from "../../hooks/useDebounce";
 import { apiService } from "../../api/api";
 import { IChar } from "../../api/char.entity";
 
-export const SearchBar = () => {
+interface IProps {
+  setData: React.Dispatch<React.SetStateAction<IChar[] | null>>;
+  data: IChar[] | null;
+}
+
+export const SearchBar = ({ setData, data }: IProps) => {
   const [value, setValue] = useState("");
   const debouncedValue = useDeboubce(value);
-  const [data, setData] = useState<IChar[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -30,13 +34,20 @@ export const SearchBar = () => {
   }, [debouncedValue]);
 
   return (
-    <input
-      className={styles.searchBar}
-      type="search"
-      placeholder="Search characters..."
-      autoFocus={true}
-      value={value}
-      onChange={(e) => handleChange(e)}
-    />
+    <div className={styles.searchBox}>
+      <input
+        className={styles.searchBar}
+        type="search"
+        placeholder="Search characters..."
+        autoFocus={true}
+        value={value}
+        onChange={(e) => handleChange(e)}
+      />
+      {data && (
+        <p
+          className={styles.resultInfo}
+        >{`Found characters: ${data.length}`}</p>
+      )}
+    </div>
   );
 };

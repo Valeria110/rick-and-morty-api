@@ -1,7 +1,7 @@
 export interface IChar {
   id: string;
   name: string;
-  status: string;
+  status: CharStatus;
   type: string;
   gender: string;
   origin: {
@@ -17,4 +17,10 @@ export interface IChar {
   episode: string[];
   url: string;
   created: string;
+}
+
+export enum CharStatus {
+  ALIVE = "Alive",
+  DEAD = "Dead",
+  UNKNOWN = "unknown",
 }
