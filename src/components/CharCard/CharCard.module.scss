@@ -1,0 +1,72 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 150px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 20px 30px;
+  transition: transform 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+  }
+
+  &:nth-child(1),
+  &:nth-child(2) {
+    flex: 0 1 calc(50% - 10px);
+  }
+  &:nth-child(n + 3) {
+    flex: 0 1 calc(33.33% - 14px);
+  }
+
+  @media screen and (max-width: 1280px) {
+    &:nth-child(n + 0) {
+      flex: 1 1 calc(50% - 10px);
+      min-height: 150px;
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    &:nth-child(n + 0) {
+      flex: 1 1 calc(100%);
+      min-height: 150px;
+    }
+
+    @media screen and (max-width: 576px) {
+      gap: 50px;
+    }
+  }
+
+  .name {
+    font-size: 30px;
+    color: #282626;
+    line-height: 30px;
+    font-weight: normal;
+
+    @media screen and (max-width: 992px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Montserrat", serif;
+    font-size: 14px;
+    line-height: 30px;
+    color: #767676;
+
+    @media screen and (max-width: 576px) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+}
+
+.alive {
+  color: #267504;
+}
+
+.dead {
+  color: #820a0a;
+}
