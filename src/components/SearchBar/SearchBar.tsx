@@ -20,11 +20,9 @@ export const SearchBar = ({ setData, data }: IProps) => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await apiService.getCharacterByName(debouncedValue);
-      console.log(data);
 
       if (data.success && Array.isArray(data.result)) {
         setData(data.result);
-        console.log(data.result);
       }
     };
 

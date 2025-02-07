@@ -16,29 +16,37 @@ interface IRes {
 class APIService {
   constructor() {}
 
-  async getAllCharacters(): Promise<{
+  private async getAllCharacters(): Promise<{
     success: boolean;
     result: IChar[] | string;
   }> {
-    const res = await fetch(`${BASE_URL}/character`);
-    if (!res.ok) {
-      const errMessage = await res.json();
-      return { success: false, result: errMessage };
-    }
+    try {
+      const res = await fetch(`${BASE_URL}/character`);
+      if (!res.ok) {
+        const errMessage = await res.json();
+        return { success: false, result: errMessage };
+      }
 
-    const data: IRes = await res.json();
-    return { success: true, result: data.results };
+      const data: IRes = await res.json();
+      return { success: true, result: data.results };
+    } catch (e) {
+      return { success: false, result: `${e}` };
+    }
   }
 
   async getCharacterByName(name: string) {
-    const allCharacters = await this.getAllCharacters();
-    if (allCharacters.success && Array.isArray(allCharacters.result)) {
-      const filteredCharacters = allCharacters.result.filter((char) =>
-        char.name.toLowerCase().includes(name.toLowerCase())
-      );
-      return { success: true, result: filteredCharacters };
-    } else {
-      return { success: false, result: allCharacters.result };
+    try {
+      const allCharacters = await this.getAllCharacters();
+      if (allCharacters.success && Array.isArray(allCharacters.result)) {
+        const filteredCharacters = allCharacters.result.filter((char) =>
+          char.name.toLowerCase().includes(name.toLowerCase())
+        );
+        return { success: true, result: filteredCharacters };
+      } else {
+        return { success: false, result: allCharacters.result };
+      }
+    } catch (e) {
+      return { success: false, result: `${e}` };
     }
   }
 }
